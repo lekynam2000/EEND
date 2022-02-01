@@ -113,3 +113,5 @@ if [ $stage -le 1 ]; then
         done
     done
 fi
+
+echo "Kaldi-stype preparing done"
