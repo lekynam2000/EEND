@@ -119,6 +119,16 @@ while [[ $# -gt 0 ]]; do
       shift # past argument
       shift # past value
       ;;
+    -d|--dset)
+      dset="$2"
+      shift # past argument
+      shift # past value
+      ;;
+    -m|--pretrained_model)
+      pretrained_model="$2"
+      shift # past argument
+      shift # past value
+      ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
