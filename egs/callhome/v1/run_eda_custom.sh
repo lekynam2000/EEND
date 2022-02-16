@@ -4,6 +4,8 @@
 # Licensed under the MIT license.
 #
 stage=0
+dset = 
+pretrained_model = 
 
 # The datasets for training must be formatted as kaldi data directory.
 # Also, make sure the audio files in wav.scp are 'regular' wav files.
@@ -104,38 +106,6 @@ adapt_config_id+=$(echo $adapt_args | sed -e 's/\-\-/_/g' -e 's/=//g' -e 's/ \+/
 
 model_2spk_id=$train_2spk_id.$valid_2spk_id.$train_2spk_config_id
 model_2spk_dir=exp/diarize/model/$model_2spk_id
-
-#Add custom variable
-
-dset = 
-pretrained_model = 
-
-#Overwrite variable
-
-while [[ $# -gt 0 ]]; do
-  case $1 in
-    -s|--stage)
-      stage="$2"
-      shift # past argument
-      shift # past value
-      ;;
-    -d|--dset)
-      dset="$2"
-      shift # past argument
-      shift # past value
-      ;;
-    -m|--pretrained_model)
-      pretrained_model="$2"
-      shift # past argument
-      shift # past value
-      ;;
-    -*|--*)
-      echo "Unknown option $1"
-      exit 1
-      ;;
-  esac
-done
-
 
 if [ $stage -le 1 ]; then
     echo "training 2-speaker model at $model_2spk_dir."
