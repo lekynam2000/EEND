@@ -4,8 +4,8 @@
 # Licensed under the MIT license.
 #
 stage=0
-dset = 
-pretrained_model = 
+dset= 
+pretrained_model= 
 
 # The datasets for training must be formatted as kaldi data directory.
 # Also, make sure the audio files in wav.scp are 'regular' wav files.
