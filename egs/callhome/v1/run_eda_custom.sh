@@ -107,8 +107,8 @@ model_2spk_dir=exp/diarize/model/$model_2spk_id
 
 #Add custom variable
 
-dset = ""
-pretrained_model = ""
+dset = 
+pretrained_model = 
 
 #Overwrite variable
 
