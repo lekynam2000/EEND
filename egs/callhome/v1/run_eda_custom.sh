@@ -6,7 +6,7 @@
 stage=0
 dset= 
 pretrained_model= 
-grouth_truth=
+ground_truth=
 
 # The datasets for training must be formatted as kaldi data directory.
 # Also, make sure the audio files in wav.scp are 'regular' wav files.
@@ -238,7 +238,7 @@ if [ $stage -le 8 ]; then
         --frame_shift=$infer_frame_shift --subsampling=$infer_subsampling --sampling_rate=$infer_sampling_rate \
         $work/file_list_$dset $scoring_dir/$dset/hyp_${th}_$med.rttm
     md-eval.pl -c 0.25 \
-        -r $grouth_truth \
+        -r $ground_truth \
         -s $scoring_dir/$dset/hyp_${th}_$med.rttm > $scoring_dir/$dset/result_th${th}_med${med}_collar0.25 2>/dev/null || exit
         
         done
