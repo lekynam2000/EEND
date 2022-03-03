@@ -59,7 +59,7 @@ utils/fix_data_dir.sh $data_dir/callhome
 utils/copy_data_dir.sh $data_dir/callhome $data_dir/callhome1
 utils/copy_data_dir.sh $data_dir/callhome $data_dir/callhome2
 
-utils/shuffle_list.pl $data_dir/callhome/wav.scp | head -n 250 \
+utils/shuffle_list.pl $data_dir/callhome/wav.scp | head -n "$num_ch1" \
   | utils/filter_scp.pl - $data_dir/callhome/wav.scp \
   > $data_dir/callhome1/wav.scp
 utils/fix_data_dir.sh $data_dir/callhome1
