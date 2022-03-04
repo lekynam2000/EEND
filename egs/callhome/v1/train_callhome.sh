@@ -7,6 +7,7 @@ stage=0
 dset= 
 pretrained_model= 
 ground_truth=
+infer_2spk_set=
 
 # The datasets for training must be formatted as kaldi data directory.
 # Also, make sure the audio files in wav.scp are 'regular' wav files.
@@ -152,7 +153,7 @@ if [ $stage -le 7 ]; then
     mkdir -p $work
     $train_cmd $work/infer.log \
         infer.py -c $infer_config \
-        data/eval/${dset} \
+        ${infer_2spk_set} \
         ${pretrained_model} \
         $infer_dir/$dset \
         || exit 1
