@@ -5,7 +5,7 @@ frame_shift: 80
 model_type: Transformer
 max_epochs: 25
 gradclip: 5
-batchsize: 64
+batchsize: 16
 hidden_size: 256
 num_frames: 500
 input_transform: logmel23_mn
