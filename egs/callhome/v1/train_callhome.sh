@@ -142,6 +142,7 @@ fi
 
 pretrained_model="$model_dir/$ave_id.nnet.npz"
 
+adapt_ave_id=avg${adapt_average_start}-${adapt_average_end}
 infer_dir=exp/diarize/infer/$model_id.$ave_id.$adapt_config_id.$adapt_ave_id.$infer_config_id
 if [ $stage -le 7 ]; then
     echo "inference at $infer_dir"
