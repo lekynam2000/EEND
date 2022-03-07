@@ -7,7 +7,7 @@ stage=0
 dset= 
 pretrained_model= 
 ground_truth=
-infer_2spk_set=
+infer_set=
 
 # The datasets for training must be formatted as kaldi data directory.
 # Also, make sure the audio files in wav.scp are 'regular' wav files.
@@ -21,7 +21,7 @@ adapt_valid_set=data/eval/callhome2_spkall
 
 # Base config files for {train,infer}.py
 train_2spk_config=conf/eda/train_2spk.yaml
-train_config=conf/eda/train.yaml
+train_config=conf/eda/callhome.yaml
 infer_config=conf/eda/infer.yaml
 adapt_config=conf/eda/adapt.yaml
 
@@ -109,36 +109,38 @@ adapt_config_id+=$(echo $adapt_args | sed -e 's/\-\-/_/g' -e 's/=//g' -e 's/ \+/
 model_2spk_id=$train_2spk_id.$valid_2spk_id.$train_2spk_config_id
 model_2spk_dir=exp/diarize/model/$model_2spk_id
 
-if [ $stage -le 1 ]; then
-    echo "training 2-speaker model at $model_2spk_dir."
-    if [ -d $model_2spk_dir ]; then
-        echo "$model_2spk_dir already exists. "
+model_id=$train_id.$valid_id.$train_config_id
+model_dir=exp/diarize/model/$model_id
+if [ $stage -le 3 ]; then
+    echo "training model at $model_dir."
+    if [ -d $model_dir ]; then
+        echo "$model_dir already exists. "
         echo " if you want to retry, please remove it."
         exit 1
     fi
-    work=$model_2spk_dir/.work
+    work=$model_dir/.work
     mkdir -p $work
     $train_cmd $work/train.log \
         train.py \
-            -c $train_2spk_config \
-            $train_2spk_args \
-            $train_2spk_set $valid_2spk_set $model_2spk_dir \
+            -c $train_config \
+            $train_args \
+            $train_set $valid_set $model_dir \
             || exit 1
 fi
 
-ave_id=avg${average_2spk_start}-${average_2spk_end}
-if [ $stage -le 2 ]; then
-    echo "averaging model parameters into $model_2spk_dir/$ave_id.nnet.npz"
-    if [ -s $model_2spk_dir/$ave_id.nnet.npz ]; then
-        echo "$model_2spk_dir/$ave_id.nnet.npz already exists. "
+ave_id=avg${average_start}-${average_end}
+if [ $stage -le 4 ]; then
+    echo "averaging model parameters into $model_dir/$ave_id.nnet.npz"
+    if [ -s $model_dir/$ave_id.nnet.npz ]; then
+        echo "$model_dir/$ave_id.nnet.npz already exists. "
         echo " if you want to retry, please remove it."
         exit 1
     fi
-    models=`eval echo $model_2spk_dir/snapshot_epoch-{$average_2spk_start..$average_2spk_end}`
-    model_averaging.py $model_2spk_dir/$ave_id.nnet.npz $models || exit 1
+    models=`eval echo $model_dir/snapshot_epoch-{$average_start..$average_end}`
+    model_averaging.py $model_dir/$ave_id.nnet.npz $models || exit 1
 fi
 
-pretrained_model="$model_2spk_dir/$ave_id.nnet.npz"
+pretrained_model="$model_dir/$ave_id.nnet.npz"
 
 infer_dir=exp/diarize/infer/$model_id.$ave_id.$adapt_config_id.$adapt_ave_id.$infer_config_id
 if [ $stage -le 7 ]; then
@@ -153,7 +155,7 @@ if [ $stage -le 7 ]; then
     mkdir -p $work
     $train_cmd $work/infer.log \
         infer.py -c $infer_config \
-        ${infer_2spk_set} \
+        ${infer_set} \
         ${pretrained_model} \
         $infer_dir/$dset \
         || exit 1
