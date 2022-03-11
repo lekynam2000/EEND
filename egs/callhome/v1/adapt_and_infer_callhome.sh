@@ -7,7 +7,7 @@ stage=0
 dset= 
 pretrained_model= 
 ground_truth=
-
+infer_set=
 # The datasets for training must be formatted as kaldi data directory.
 # Also, make sure the audio files in wav.scp are 'regular' wav files.
 # Including piped commands in wav.scp makes training very slow
