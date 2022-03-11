@@ -213,8 +213,8 @@ if [ $stage -le 7 ]; then
     mkdir -p $work
     $train_cmd $work/infer.log \
         infer.py -c $infer_config \
-        {$infer_set}} \
-        $$adapt_ave_id.nnet.npz \
+        {$infer_set} \
+        ${adapt_ave_id.nnet.npz} \
         $infer_dir/$dset \
         || exit 1
     
