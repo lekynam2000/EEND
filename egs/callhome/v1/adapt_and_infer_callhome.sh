@@ -183,7 +183,7 @@ if [ $stage -le 5 ]; then
         train.py \
             -c $adapt_config \
             $adapt_args \
-            --initmodel {$pretrained_model} \
+            --initmodel $pretrained_model \
             $adapt_set $adapt_valid_set $adapt_model_dir \
                 || exit 1
 fi
