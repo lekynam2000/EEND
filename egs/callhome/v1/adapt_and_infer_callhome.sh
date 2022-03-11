@@ -213,7 +213,7 @@ if [ $stage -le 7 ]; then
     mkdir -p $work
     $train_cmd $work/infer.log \
         infer.py -c $infer_config \
-        {$infer_set} \
+        ${infer_set} \
         ${adapt_ave_id.nnet.npz} \
         $infer_dir/$dset \
         || exit 1
@@ -238,7 +238,7 @@ if [ $stage -le 8 ]; then
         --frame_shift=$infer_frame_shift --subsampling=$infer_subsampling --sampling_rate=$infer_sampling_rate \
         $work/file_list_$dset $scoring_dir/$dset/hyp_${th}_$med.rttm
     md-eval.pl -c 0.25 \
-        -r {$infer_set/result.rttm} \
+        -r ${infer_set}/result.rttm \
         -s $scoring_dir/$dset/hyp_${th}_$med.rttm > $scoring_dir/$dset/result_th${th}_med${med}_collar0.25 2>/dev/null || exit
         
         done
