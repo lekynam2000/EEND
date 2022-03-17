@@ -232,8 +232,8 @@ if [ $stage -le 8 ]; then
     work=$scoring_dir/$dset/.work
     mkdir -p $work
     find $infer_dir/$dset -iname "*.h5" > $work/file_list_$dset
-    for med in 1 11; do
-    for th in 0.3 0.4 0.5 0.6 0.7 0.8 0.9; do
+    for med in 1 11 13 15; do
+    for th in 0.3 0.4 0.5 0.6 0.7 0.8 0.9 0.92 0.95 0.99; do
     make_rttm.py --median=$med --threshold=$th \
         --frame_shift=$infer_frame_shift --subsampling=$infer_subsampling --sampling_rate=$infer_sampling_rate \
         $work/file_list_$dset $scoring_dir/$dset/hyp_${th}_$med.rttm
